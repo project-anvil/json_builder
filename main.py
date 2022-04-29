@@ -10,7 +10,8 @@ def build_json(json_items):
                 data = file.read().replace('\n', '')
                 obj = {**obj, **json.loads(data)}
         else:
-            obj = {**obj, **dict([tuple(item.split("="))])}
+            prepared_item = item.split("=") if len(item.split("=")[1].split(",")) == 1 else [item.split("=")[0], item.split("=")[1].split(",")]
+            obj = {**obj, **dict([tuple(prepared_item)])}
     return json.dumps(obj)
 
 print(build_json(sys.argv[1:]))
